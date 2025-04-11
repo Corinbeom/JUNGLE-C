@@ -3,15 +3,28 @@ project(jungle_c C)
 
 set(CMAKE_C_STANDARD 11)
 
-# 소스 파일들 자동 탐색
-file(GLOB COMMON_SOURCES "Week05/common/*.c")
-file(GLOB SAMPLE_USER_SOURCES "Week05/sample_user/*.c")
-
-# 헤더 포함 경로 설정 (필요시)
-include_directories(Week05/common Week05/sample_user)
-
-# 실행 파일 생성
-add_executable(jungle_c
-        ${COMMON_SOURCES}
-        ${SAMPLE_USER_SOURCES}
+file(GLOB_RECURSE SRC_FILES
+        "Week05/common/*.c"
+        "Week05/sample_user/*.c"
+        "Week06/common/*.c"
+        "Week06/sample_user/*.c"
+        "Week07/common/*.c"
+        "Week07/sample_user/*.c"
+        "Week08/common/*.c"
+        "Week08/sample_user/*.c"
 )
+
+# 헤더 경로 추가
+include_directories(
+        Week05/common
+        Week05/sample_user
+        Week06/common
+        Week06/sample_user
+        Week07/common
+        Week07/sample_user
+        Week08/common
+        Week08/sample_user
+)
+
+
+add_executable(jungle_c ${SRC_FILES})

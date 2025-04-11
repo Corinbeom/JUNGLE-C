@@ -6,6 +6,7 @@ Purpose: Implementing the required functions for Question 5 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// #include <csapp.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -100,9 +101,48 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
-void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
-{
-	/* add your code here */
+void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList) {
+	int size = 0;
+	ListNode *curr = ll->head;
+	ListNode *frontTail = NULL;
+	ListNode *backTail = NULL;
+	while (curr != NULL) {
+		size++;
+		curr = curr->next;
+	}
+
+	int mid = (size + 1) / 2;
+
+	curr = ll->head;
+
+	for (int i = 0; i < mid; i++) {
+		ListNode *newNode = malloc(sizeof(ListNode));
+		newNode->item = curr->item;
+		newNode->next = NULL;
+		if (resultFrontList->head == NULL) {
+			resultFrontList->head = newNode;
+			frontTail = newNode;
+		} else {
+			frontTail->next = newNode;
+			frontTail = newNode;
+		}
+		curr = curr->next;
+	}
+
+		while (curr != NULL) {
+			ListNode *newNode = malloc(sizeof(ListNode));
+			newNode->item = curr->item;
+			newNode->next = NULL;
+			if (resultBackList->head == NULL) {
+				resultBackList->head = newNode;
+				backTail = newNode;
+			} else {
+				backTail->next = newNode;
+				backTail = newNode;
+			}
+			curr = curr->next;
+		}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
