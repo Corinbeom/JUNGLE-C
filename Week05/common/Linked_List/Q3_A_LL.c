@@ -86,29 +86,40 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll) {
   	int n = ll->size;
+
 	ListNode *curr = ll->head;
     ListNode *prev = NULL;
-	ListNode *tail = ll->head;
-	while (tail->next != NULL) tail = tail->next;
 
-    for (int i = 0; i < n; i++) {
+	//  tail을 리스트 끝으로 이동
+	ListNode *tail = ll->head;
+	while (tail != NULL || tail->next != NULL) {
+		tail = tail->next;
+	}
+
+    for (int i = 0; i < n && curr != NULL; i++) {
     	if (curr->item % 2 == 0) {
+    		//  짝수는 그대로 유지
         	prev = curr;
             curr = curr->next;
         }
         else {
-        	ListNode *temp = curr->next;  // 다음 노드 미리 저장
+        	//  홀수는 리스트 뒤로 이동
 
-        	if (prev == NULL) {
+        	ListNode *temp = curr->next;  //  다음 노드 미리 저장
+
+        	if (prev == NULL) {			  //  현재 노드가 head인 경우
         		ll->head = temp;
         	} else {
         		prev->next = temp;
         	}
 
+        	//  홀수 노드를 tail 뒤에 붙이기
         	tail->next = curr;
         	curr->next = NULL;
-        	tail = curr;
+        	tail = curr;  //  tail 업데이트
         	curr = temp;
+
+        	//  리스트 크기는 고정, 순회 범위는 n 그대로 유자
         }
     }
 }

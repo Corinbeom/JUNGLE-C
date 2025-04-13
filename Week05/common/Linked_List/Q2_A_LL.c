@@ -107,19 +107,26 @@ void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
     ListNode *curr2 = ll2->head;
 	ListNode *next1, *next2;
 
+	// 두 리스트가 모두 비어있으면 아무 것도 안 함
+	if (curr1 == NULL || curr2 == NULL) {
+		return;
+	}
+
+	//  두 리스트의 노드를 번갈아가며 병합
     while (curr1 != NULL && curr2 != NULL) {
-		next1 = curr1->next;
-        next2 = curr2->next;
+		next1 = curr1->next;	//  ll1의 다음 노드 저장
+        next2 = curr2->next;	//  ll2의 다음 노드 저장
 
-        curr1->next = curr2;
-        curr2->next = next1;
+        curr1->next = curr2;	//  ll1 노드 뒤에 ll2 노드 연결
+        curr2->next = next1;	//  ll2 노드 뒤에 원래 ll1의 다음노드 연결
 
-        curr1 = next1;
-        curr2 = next2;
+        curr1 = next1;			//  ll1의 현재 위치 이동
+        curr2 = next2;			//  ll2의 현재 위치 이동
 
-        ll1->size++;
-        ll2->size--;
+        ll1->size++;			//  ll1은 노드 추가됐으니 증가
+        ll2->size--;			//  ll2에서 빠졌으니 감소
     }
+	//  병합 후 남은 ll2 노드를 head로 재설정
     ll2->head = curr2;
 }
 

@@ -104,35 +104,38 @@ int main()
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList) {
 	int size = 0;
 	ListNode *curr = ll->head;
-	ListNode *frontTail = NULL;
-	ListNode *backTail = NULL;
+
+	// 리스트 전체 크기 계산
 	while (curr != NULL) {
 		size++;
 		curr = curr->next;
 	}
 
-	int mid = (size + 1) / 2;
+	int mid = (size + 1) / 2; // 앞 리스트에 더 많은 노드가 가도록 설정
 
+	// 포인터 초기화
 	curr = ll->head;
+	ListNode *frontTail = NULL;
+	ListNode *backTail = NULL;
 
-	for (int i = 0; i < mid; i++) {
+	for (int i = 0; i < size; i++) {
+		// 새 노드 생성 (데이터 복사)
 		ListNode *newNode = malloc(sizeof(ListNode));
 		newNode->item = curr->item;
 		newNode->next = NULL;
-		if (resultFrontList->head == NULL) {
-			resultFrontList->head = newNode;
-			frontTail = newNode;
-		} else {
-			frontTail->next = newNode;
-			frontTail = newNode;
-		}
-		curr = curr->next;
-	}
 
-		while (curr != NULL) {
-			ListNode *newNode = malloc(sizeof(ListNode));
-			newNode->item = curr->item;
-			newNode->next = NULL;
+		// 앞쪽 리스트에 넣는 경우
+		if (i < mid) {
+			if (resultFrontList->head == NULL) {
+				resultFrontList->head = newNode;
+				frontTail = newNode;
+			} else {
+				frontTail->next = newNode;
+				frontTail = newNode;
+			}
+		}
+		// 뒤쪽 리스트에 넣는 경우
+		else {
 			if (resultBackList->head == NULL) {
 				resultBackList->head = newNode;
 				backTail = newNode;
@@ -140,10 +143,16 @@ void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, Linke
 				backTail->next = newNode;
 				backTail = newNode;
 			}
-			curr = curr->next;
 		}
 
+		curr = curr->next;
+	}
+
+	// 사이즈 저장
+	resultFrontList->size = mid;
+	resultBackList->size = size - mid;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 
