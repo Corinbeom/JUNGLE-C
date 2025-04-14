@@ -27,4 +27,5 @@ include_directories(
 )
 
 
-add_executable(jungle_c ${SRC_FILES})
+add_executable(jungle_c ${SRC_FILES}
+        Week05/common/Linked_List/LLprac1.c)

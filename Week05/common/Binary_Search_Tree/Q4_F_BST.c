@@ -91,7 +91,36 @@ int main()
 
 void postOrderIterativeS1(BSTNode *root)
 {
-	 /* add your code here */
+	Stack *s = malloc(sizeof(Stack));
+	Stack *out = malloc(sizeof(Stack));
+
+	s->top = NULL;
+	out->top = NULL;
+
+	if (root == NULL) return;
+
+	push(s, root);			//  여기서 스택 s에 root를 넣어줘
+
+
+	while (!isEmpty(s)) {   //  스택은 비어있지만 curr안에는 위에 줄에서 s의 원소를 팝한 값이 NULL이 아니라서 동작하는거야?
+		BSTNode *curr = pop(s);
+		push(out, curr);
+
+		if (curr->left != NULL) {
+			push(s, curr->left);
+		}
+		if (curr->right != NULL) {
+			push(s, curr->right);
+		}
+
+	}
+
+	while (!isEmpty(out)) {
+		BSTNode *node = pop(out);
+		printf("%d ", node->item);
+	}
+	free(s);
+	free(out);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
