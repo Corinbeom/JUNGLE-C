@@ -102,31 +102,46 @@ int main()
 }
 
 ////////////////////////////////////////////////////////////
+// 괄호 문자열이 올바르게 짝지어졌는지 확인하는 함수
+// (), [], {} 가 올바른 순서로 닫히는지 검사
 int balanced(char *expression)
 {
+	// 1단계: 스택 초기화 (문자 하나씩 저장할 용도)
 	Stack s;
 	s.ll.head = NULL;
 	s.ll.size = 0;
 
+	// 2단계: 문자열 끝까지 하나씩 검사
 	while (*expression != '\0') {
+
+		// 여는 괄호는 무조건 스택에 push
 		if (*expression == '(' || *expression == '[' || *expression == '{') {
 			push(&s, *expression);
 		}
+		// 닫는 괄호인 경우
 		else if (*expression == ')' || *expression == ']' || *expression == '}') {
+
+			// 스택이 비었으면 짝 맞을 수 없으므로 실패
 			if (isEmptyStack(&s)) return 0;
 
+			// 스택에서 맨 위 괄호를 꺼내서 짝이 맞는지 비교
 			char top = pop(&s);
+
+			// 괄호 쌍이 맞지 않으면 실패
 			if ((*expression == ')' && top != '(') ||
 				(*expression == ']' && top != '[') ||
 				(*expression == '}' && top != '{')) {
 				return 0;
 				}
 		}
+		// 다음 문자로 이동
 		expression++;
 	}
 
-	return isEmptyStack(&s); // 스택 비어있으면 성공
+	// 3단계: 모든 괄호가 정상적으로 짝지어졌다면 스택이 비어 있어야 함
+	return isEmptyStack(&s);
 }
+
 
 ////////////////////////////////////////////////////////////
 

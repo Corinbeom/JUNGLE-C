@@ -111,18 +111,24 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// LinkedList의 값을 Stack에 복사하는 함수
+// 기존 Stack 내용을 모두 제거한 후, LinkedList를 순회하며 Stack에 push
+// ➤ 주의: Stack에 push하면 마지막 값이 맨 위로 가므로, 결과적으로 역순으로 저장됨
 void createStackFromLinkedList(LinkedList *ll, Stack *s)
 {
-    while (s->ll.size > 0) {
-	    removeNode(&s->ll, 0);
-    }
+	// 1단계: 기존 Stack 비우기 (LinkedList 기반이라 0번 인덱스부터 삭제)
+	while (s->ll.size > 0) {
+		removeNode(&s->ll, 0);
+	}
 
+	// 2단계: LinkedList 순회하며 Stack에 push
 	ListNode *cur = ll->head;
 	while (cur != NULL) {
-		push(s, cur->item);
+		push(s, cur->item);  // Stack 특성상 마지막 값이 맨 위로 올라감
 		cur = cur->next;
 	}
 }
+
 
 void removeEvenValues(Stack *s)
 {

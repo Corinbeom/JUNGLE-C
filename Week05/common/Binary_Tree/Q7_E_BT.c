@@ -101,20 +101,23 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 이진 트리에서 가장 작은 값을 찾아 반환하는 함수
 int smallestValue(BTNode *node)
 {
+    // 1. 노드가 NULL이면, 비교 불가능하므로 INT_MAX 반환 (최솟값 비교용)
     if (node == NULL) return INT_MAX;
 
+    // 2. 왼쪽과 오른쪽 서브트리에서 각각의 최소값 재귀적으로 구함
     int leftMin = smallestValue(node->left);
-    int rightMin =smallestValue(node->right);
+    int rightMin = smallestValue(node->right);
 
+    // 3. 왼쪽과 오른쪽 중 더 작은 값 선택
+    int subMin = (leftMin < rightMin) ? leftMin : rightMin;
 
-    int minLeftRight = (leftMin < rightMin) ? leftMin : rightMin;
-    int finalMin = (node->item < minLeftRight) ? node->item : minLeftRight;
-
-    return finalMin;
-
+    // 4. 현재 노드 값과 자식 중 최솟값 비교 후 더 작은 값 반환
+    return (node->item < subMin) ? node->item : subMin;
 }
+
 
 //////////////////////////////////////////////////////////////////////////////////
 

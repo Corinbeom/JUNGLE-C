@@ -89,31 +89,41 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 이진 탐색 트리를 반복문으로 전위 순회(pre-order traversal)하는 함수
 void preOrderIterative(BSTNode *root)
 {
+	// 1. 스택 초기화
 	Stack *s = malloc(sizeof(Stack));
-	BSTNode *curr;
 	s->top = NULL;
 
+	// 2. 루트가 NULL이면 바로 종료
+	if (root == NULL) {
+		free(s);
+		return;
+	}
+
+	// 3. 루트부터 시작 → 전위 순회이므로 먼저 push
+	push(&s, root);
+
+	// 4. 스택이 빌 때까지 반복
 	while (!isEmpty(s)) {
-		pop(&s);
+		// 스택에서 노드 꺼내서 출력
+		BSTNode *curr = pop(&s);
+		printf("%d ", curr->item);
+
+		// 전위 순회는 루트 → 왼쪽 → 오른쪽이니까,
+		// 스택은 후입선출이므로 → 오른쪽 먼저, 그다음 왼쪽 push
+		if (curr->right != NULL)
+			push(&s, curr->right);
+		if (curr->left != NULL)
+			push(&s, curr->left);
 	}
 
-	curr = root;
-
-	while (!isEmpty(s)|| curr != NULL) {
-		if (curr != NULL) {
-			push(&s, curr);
-			printf("%d ", curr->item);
-			curr = curr->left;
-		} else {
-			curr = pop(&s);
-			curr = curr->right;
-		}
-
-	}
+	// 5. 메모리 해제
 	free(s);
+
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 

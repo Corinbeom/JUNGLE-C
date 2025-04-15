@@ -110,23 +110,30 @@ int main()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+// 큐를 반전시키는 함수: Queue → Stack → Queue 로 옮기면서 순서를 역순으로 만듦
 void reverse(Queue *q)
 {
+	// 1단계: 임시 스택 생성 (큐의 요소들을 역순으로 담기 위함)
 	Stack temp;
-	temp.ll.head =NULL;
-	temp.ll.tail =NULL;
-	temp.ll.size =0;
+	temp.ll.head = NULL;
+	temp.ll.tail = NULL;
+	temp.ll.size = 0;
 
+	// 2단계: 큐에서 모든 요소를 꺼내 스택에 push
+	// 이렇게 하면 스택에는 큐의 역순이 저장됨
 	while (!isEmptyQueue(q)) {
 		int val = dequeue(q);
 		push(&temp, val);
 	}
 
+	// 3단계: 스택에서 요소를 꺼내 다시 큐에 넣기
+	// 결과적으로 큐의 순서가 반전됨
 	while (!isEmptyStack(&temp)) {
 		int val = pop(&temp);
 		enqueue(q, val);
 	}
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

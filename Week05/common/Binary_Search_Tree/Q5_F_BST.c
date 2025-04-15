@@ -90,33 +90,47 @@ int main()
 
 void postOrderIterativeS2(BSTNode *root)
 {
+	// 두 개의 스택 생성:
+	// s1은 순회용, s2는 post-order 결과를 저장하기 위한 스택
 	Stack *s1 = malloc(sizeof(Stack));
 	Stack *s2 = malloc(sizeof(Stack));
 	s1->top = NULL;
 	s2->top = NULL;
 
+	// 예외 처리: 빈 트리면 바로 리턴
 	if (root == NULL) return;
 
+	// 루트 노드를 순회의 시작점으로 s1에 push
 	push(s1, root);
 
+	// s1이 빌 때까지 순회 반복
 	while (!isEmpty(s1)) {
+		// s1에서 현재 노드 꺼내서
 		BSTNode *curr = pop(s1);
+		// 그 노드를 s2에 push (루트 → 오른쪽 → 왼쪽 순으로 저장됨)
 		push(s2, curr);
 
+		// 왼쪽 자식이 있으면 s1에 push (s1은 DFS 스택이니까 자식 먼저 넣기)
 		if (curr->left != NULL) {
 			push(s1, curr->left);
 		}
+		// 오른쪽 자식도 push
 		if (curr->right != NULL) {
 			push(s1, curr->right);
 		}
 	}
+
+	// s2에서 pop하면서 노드 출력 → 이게 바로 post-order (왼 → 오 → 루트)
 	while (!isEmpty(s2)) {
 		BSTNode *curr = pop(s2);
 		printf("%d ", curr->item);
 	}
+
+	// 메모리 해제 (할당한 스택 구조체)
 	free(s1);
 	free(s2);
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 

@@ -101,36 +101,47 @@ int main()
 
 /////////////////////////////////////////////////////////////////////////////////
 
+// 스택에 있는 숫자들이 짝을 이뤄서 서로 1 차이 나는지 확인하는 함수
+// 짝이 안 맞거나 조건 안 맞으면 false(0) 반환
 int isStackPairwiseConsecutive(Stack *s)
 {
+	// 임시 스택 생성 (원본 스택을 복구하기 위해 사용)
 	Stack temp;
 	temp.ll.head = NULL;
 	temp.ll.tail = NULL;
 	temp.ll.size = 0;
 
-	int isPairwise = 1;
+	int isPairwise = 1;  // 기본값: 모두 짝이 맞는다고 가정
+
 	while (!isEmptyStack(s)) {
 		int first = pop(s);
 
+		// 짝이 맞는 두 개를 pop해서 검사
 		if (!isEmptyStack(s)) {
 			int second = pop(s);
 
+			// 두 값이 연속되지 않으면 flag를 false로 변경
 			if (abs(first - second) != 1) {
 				isPairwise = 0;
 			}
 
+			// pop한 두 값 순서대로 임시 스택에 push (복구용)
 			push(&temp, second);
 			push(&temp, first);
 		} else {
+			// 마지막 홀수 개 남았을 경우도 고려: 그냥 복구용으로 push
 			push(&temp, first);
 		}
 	}
 
+	// 원래 스택 상태 복구
 	while (!isEmptyStack(&temp)) {
 		push(s, pop(&temp));
 	}
+
 	return isPairwise;
 }
+
 
 //////////////////////////////////////////////////////////////////////////////////
 

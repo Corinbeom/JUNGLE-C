@@ -109,10 +109,13 @@ int main()
 
 ////////////////////////////////////////////////////////////
 
+// 스택에서 지정된 값(value)을 만날 때까지 요소를 제거하는 함수
+// 만약 value가 스택 안에 없으면 전체 스택이 비워짐
 void removeUntil(Stack *s, int value)
 {
+	// 스택이 비었지 않고, top이 우리가 찾는 값이 아니면 계속 pop
 	while (!isEmptyStack(s) && peek(s) != value) {
-		pop(s);
+		pop(s);  // value 이전의 값들은 모두 버림
 	}
 }
 

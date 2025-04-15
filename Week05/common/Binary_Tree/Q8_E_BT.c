@@ -100,20 +100,28 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 증손자(great-grandchild)를 가진 노드를 출력하는 함수
 int hasGreatGrandchild(BTNode *node)
 {
+    // 1. NULL이면 높이 -1 반환 (leaf의 자식 기준)
     if (node == NULL) return -1;
 
+    // 2. 왼쪽, 오른쪽 서브트리의 높이 계산
     int leftHeight = hasGreatGrandchild(node->left);
     int rightHeight = hasGreatGrandchild(node->right);
 
+    // 3. 현재 노드의 높이 계산 (가장 높은 자식 높이 + 1)
     int currHeight = (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
 
+    // 4. 현재 노드가 증손자를 가지려면 높이가 3 이상이어야 함
     if (currHeight >= 3) {
-        printf("%d\n ", node->item);
+        printf("%d\n", node->item);
     }
+
+    // 5. 현재 노드의 높이 반환
     return currHeight;
 }
+
 
 
 

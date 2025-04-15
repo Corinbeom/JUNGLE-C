@@ -91,33 +91,37 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 이진 탐색 트리의 레벨 순회(Level Order Traversal)를 수행하는 함수
 void levelOrderTraversal(BSTNode* root)
 {
+	// 큐 초기화 (head, tail 포인터)
 	QueueNode *head = NULL;
 	QueueNode *tail = NULL;
 
-	while (!isEmpty(head)) {
-		dequeue(&head, &tail);
-	}
+	// 루트 노드가 NULL이면 아무것도 출력하지 않고 종료
+	if (root == NULL) return;
 
-	if (root == NULL) {
-		return;
-	}
-
+	// 루트 노드를 큐에 삽입
 	enqueue(&head, &tail, root);
 
+	// 큐가 빌 때까지 순회 (BFS 방식)
 	while (!isEmpty(head)) {
+		// 큐에서 노드를 꺼냄
 		BSTNode *curr = dequeue(&head, &tail);
+
+		// 현재 노드의 값을 출력
 		printf("%d ", curr->item);
 
-		if (curr->left != NULL) {
+		// 왼쪽 자식이 있으면 큐에 삽입
+		if (curr->left != NULL)
 			enqueue(&head, &tail, curr->left);
-		}
-		if (curr->right != NULL) {
+
+		// 오른쪽 자식이 있으면 큐에 삽입
+		if (curr->right != NULL)
 			enqueue(&head, &tail, curr->right);
-		}
 	}
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 

@@ -89,36 +89,46 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 이진 탐색 트리를 반복문으로 후위 순회(post-order traversal)하는 함수 (두 개의 스택 사용)
 void postOrderIterativeS1(BSTNode *root)
 {
+	// 1. 스택 두 개 선언: s는 처리용, out은 출력용
 	Stack *s = malloc(sizeof(Stack));
 	Stack *out = malloc(sizeof(Stack));
-
 	s->top = NULL;
 	out->top = NULL;
 
-	if (root == NULL) return;
+	// 2. 트리가 비었으면 바로 종료
+	if (root == NULL) {
+		free(s);
+		free(out);
+		return;
+	}
 
-	push(s, root);			//  여기서 스택 s에 root를 넣어줘
+	// 3. 루트 노드를 s에 push
+	push(s, root);
 
-
-	while (!isEmpty(s)) {   //  스택은 비어있지만 curr안에는 위에 줄에서 s의 원소를 팝한 값이 NULL이 아니라서 동작하는거야?
+	// 4. s가 빌 때까지 반복
+	while (!isEmpty(s)) {
+		// s에서 pop한 노드를 out에 push
 		BSTNode *curr = pop(s);
 		push(out, curr);
 
-		if (curr->left != NULL) {
+		// 왼쪽 → 오른쪽 순으로 넣어야,
+		// 나중에 out에서 pop할 때 → 왼쪽 먼저 출력됨 (후위순회 순서 맞추기 위함)
+		if (curr->left != NULL)
 			push(s, curr->left);
-		}
-		if (curr->right != NULL) {
+		if (curr->right != NULL)
 			push(s, curr->right);
-		}
-
 	}
 
+	// 5. out에서 노드를 꺼내며 출력 → post-order 순서대로 출력됨
 	while (!isEmpty(out)) {
 		BSTNode *node = pop(out);
 		printf("%d ", node->item);
 	}
+
+	// 6. 스택 메모리 해제
 	free(s);
 	free(out);
 }

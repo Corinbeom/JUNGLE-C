@@ -103,16 +103,24 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 이진 탐색 트리(BST)에서 값 m보다 작은 노드들만 오름차순으로 출력하는 함수
 void printSmallerValues(BTNode *node, int m)
 {
-	if (node == NULL) return;
+    // 베이스 케이스: 노드가 없으면 종료
+    if (node == NULL) return;
 
+    // 왼쪽 서브트리 먼저 탐색 (중위 순회)
     printSmallerValues(node->left, m);
+
+    // 현재 노드의 값이 m보다 작으면 출력
     if (node->item < m) {
         printf("%d ", node->item);
     }
+
+    // 오른쪽 서브트리 탐색
     printSmallerValues(node->right, m);
 }
+
 
 //////////////////////////////////////////////////////////////////////////////////
 

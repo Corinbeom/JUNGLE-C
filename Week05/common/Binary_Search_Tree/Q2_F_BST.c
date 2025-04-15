@@ -88,29 +88,35 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 이진 탐색 트리를 중위 순회 (in-order traversal)하는 함수 - 반복문 + 스택 사용
 void inOrderTraversal(BSTNode *root)
 {
+	// 1. 스택 동적 할당 및 초기화
 	Stack *s = malloc(sizeof(Stack));
-	BSTNode *curr;
 	s->top = NULL;
-	while (!isEmpty(s)) {
-		pop(&s);
-	}
 
-	curr = root;
+	BSTNode *curr = root;
 
-	while (!isEmpty(s) || curr !=NULL) {
+	// 2. 현재 노드가 NULL이 아니거나, 스택에 노드가 남아있을 때까지 반복
+	while (!isEmpty(s) || curr != NULL) {
 		if (curr != NULL) {
-			push(&s,curr);
+			// 왼쪽 서브트리를 따라 계속 스택에 push
+			push(&s, curr);
 			curr = curr->left;
-		}
-		else {
+		} else {
+			// 왼쪽 끝까지 갔으면 스택에서 꺼내서 방문 (출력)
 			curr = pop(&s);
 			printf("%d ", curr->item);
+
+			// 오른쪽 서브트리로 이동
 			curr = curr->right;
 		}
 	}
+
+	// 3. 스택 메모리 해제
+	free(s);
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 

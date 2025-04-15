@@ -107,12 +107,21 @@ int main()
 
 ////////////////////////////////////////////////////////////
 
+// 재귀를 이용해 Queue의 요소들을 역순으로 바꾸는 함수
 void recursiveReverse(Queue *q)
 {
+	// 1단계: 종료 조건 — 큐가 비었으면 리턴 (재귀 종료 지점)
 	if (isEmptyQueue(q)) return;
 
+	// 2단계: 큐의 front 요소를 꺼내고 재귀로 나머지 큐를 처리
+	// → 이 시점에서 front는 "나중에 enqueue될 값"이 됨
 	int front = dequeue(q);
+
+	// 3단계: 남은 큐에 대해 재귀적으로 역순 처리
 	recursiveReverse(q);
+
+	// 4단계: call stack을 따라 돌아오면서 값을 다시 enqueue
+	// → 마지막에 꺼낸 값이 제일 먼저 들어가므로 전체가 역순이 됨
 	enqueue(q, front);
 }
 

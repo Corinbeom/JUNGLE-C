@@ -113,15 +113,21 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 두 개의 이진 트리가 구조와 값이 모두 동일한지 검사하는 함수
 int identical(BTNode *tree1, BTNode *tree2)
-
 {
+    // 1단계: 둘 다 NULL이면 동일하다고 간주 (leaf 노드까지 같다는 뜻)
     if (tree1 == NULL && tree2 == NULL) return 1;
+
+    // 2단계: 한쪽만 NULL이면 구조가 다르다는 뜻 → 동일하지 않음
     if (tree1 == NULL || tree2 == NULL) return 0;
 
+    // 3단계: 현재 노드의 값이 다르면 당연히 동일하지 않음
     if (tree1->item != tree2->item) return 0;
 
-    return identical(tree1->left, tree2->left) && identical(tree1->right, tree2->right);
+    // 4단계: 왼쪽과 오른쪽 서브트리를 각각 재귀적으로 비교
+    return identical(tree1->left, tree2->left) &&
+           identical(tree1->right, tree2->right);
 }
 
 /////////////////////////////////////////////////////////////////////////////////

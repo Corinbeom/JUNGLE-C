@@ -116,13 +116,16 @@ int main()
 
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
+	// 1단계: 기존 Queue 초기화 (남아있는 모든 노드 제거)
 	while (q->ll.size > 0) {
-		removeNode(&q->ll, 0);
+		removeNode(&q->ll, 0);  // 큐는 선입선출 구조이므로 항상 앞에서 제거
 	}
 
+	// 2단계: LinkedList 순회하며 Queue에 값 삽입
 	ListNode *cur = ll->head;
 
 	while (cur != NULL) {
+		// 큐는 리스트 구조를 내부적으로 쓰므로, 항상 마지막에 insert
 		insertNode(&q->ll, q->ll.size, cur->item);
 		cur = cur->next;
 	}

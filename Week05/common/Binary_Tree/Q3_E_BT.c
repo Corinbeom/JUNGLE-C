@@ -98,22 +98,27 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 이진 트리에서 자식이 정확히 하나만 있는 노드의 개수를 세는 함수
 int countOneChildNodes(BTNode *node)
-
 {
+    // 베이스 케이스: 노드가 없으면 카운트 0
     if (node == NULL) return 0;
 
+    // 리프 노드: 자식이 둘 다 없으므로 카운트 대상 아님
     if (node->left == NULL && node->right == NULL) {
         return 0;
     }
 
-    if (((node->left != NULL) && (node->right == NULL)) || ((node->left == NULL) && (node->right != NULL))) {
-        return (countOneChildNodes(node->left) + countOneChildNodes(node->right)) + 1;
-    }
-    else {
-        return (countOneChildNodes(node->left) + countOneChildNodes(node->right));
-    }
+    // 현재 노드가 자식 하나만 가질 경우: +1
+    if ((node->left == NULL && node->right != NULL) ||
+        (node->left != NULL && node->right == NULL)) {
+        return 1 + countOneChildNodes(node->left) + countOneChildNodes(node->right);
+        }
+
+    // 그 외: 자식이 둘 다 있을 경우, 자식들만 재귀 탐색
+    return countOneChildNodes(node->left) + countOneChildNodes(node->right);
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 

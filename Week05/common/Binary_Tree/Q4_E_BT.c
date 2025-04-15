@@ -100,16 +100,20 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+//  홀수 노드의 총 합을 구하는 함수
 int sumOfOddNodes(BTNode *node)
 
 {
+    //  1. 노드가 없으면 종료 (베이스케이스 : 종료 조건)
     if (node == NULL) return 0;
+
+    // 현재 노드가 홀수인 경우: 노드의 값 + 좌우 서브트리 재귀 합
     if (node->item % 2 == 1) {
-        return (node->item + sumOfOddNodes(node->left) + sumOfOddNodes(node->right));
+        return node->item + sumOfOddNodes(node->left) + sumOfOddNodes(node->right);
     }
-    else {
-        return (sumOfOddNodes(node->left) + sumOfOddNodes(node->right));
-    }
+
+    // 현재 노드가 짝수인 경우: 좌우 서브트리만 탐색 (현재 노드는 합산 안 함)
+    return sumOfOddNodes(node->left) + sumOfOddNodes(node->right);
 }
 
 //////////////////////////////////////////////////////////////////////////////////

@@ -103,15 +103,19 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 이진 트리를 좌우 반전(mirror)시키는 함수
+// 각 노드의 왼쪽/오른쪽 자식을 서로 교환하여 트리를 대칭 구조로 만듦
 void mirrorTree(BTNode *node)
 {
-    BTNode *temp = NULL;
+    // 종료 조건: 노드가 NULL이면 더 이상 처리할 게 없음
     if (node == NULL) return;
 
+    // 먼저 좌우 서브트리를 재귀적으로 반전시킴 (post-order 느낌)
     mirrorTree(node->left);
     mirrorTree(node->right);
 
-    temp = node->left;
+    // 현재 노드에서 왼쪽/오른쪽 자식 노드를 서로 교환
+    BTNode *temp = node->left;
     node->left = node->right;
     node->right = temp;
 }
